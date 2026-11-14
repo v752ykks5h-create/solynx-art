@@ -6,6 +6,8 @@ import w3 from "@/assets/work-3.jpg";
 import w4 from "@/assets/work-4.jpg";
 import w5 from "@/assets/work-5.jpg";
 
+const SECTION_AT: Record<number, string> = { 2: "menu", 3: "selected_works", 8: "projects", 9: "about", 10: "hello" };
+
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
@@ -56,7 +58,7 @@ function Index() {
     <div key="menu" className="flex h-full items-end justify-start p-6 md:p-14">
       <nav className="flex flex-col gap-3">
         {menu.map((m) => (
-          <button key={m.n} onClick={() => go(m.target)} className="group flex items-baseline gap-6 text-left text-2xl font-light tracking-[0.04em] md:text-4xl">
+          <button key={m.n} onClick={() => go(m.target, "menu")} className="group flex items-baseline gap-6 text-left text-2xl font-light tracking-[0.04em] md:text-4xl">
             <span className="caption w-6">{m.n}</span>
             <span className="transition-opacity duration-500 group-hover:opacity-40">{m.label}</span>
           </button>
@@ -76,35 +78,39 @@ function Index() {
     )),
     <Section key="projects" title="projects.">
       <ul className="space-y-6">
-        {[["2026", "quiet architecture", "kunsthalle basel"], ["2025", "between weather", "public commission, kyoto"], ["2024", "held light", "residency, iceland"]].map(([y, t, p]) => (
+        {[["2024", "gradients.", "private exhibition (invitational)", "secret location"], ["2026", "work in progress.", "coming soon", ""]].map(([y, t, p, l]) => (
           <li key={t} className="grid grid-cols-[4rem_1fr] gap-4 border-t border-border pt-4">
             <span className="caption">{y}</span>
-            <div><p className="text-lg font-light">{t}</p><p className="caption mt-1">{p}</p></div>
+            <div><p className="text-lg font-light">{t}</p><p className="caption mt-1">{p}</p>{l && <p className="caption mt-1">{l}</p>}</div>
           </li>
         ))}
       </ul>
     </Section>,
     <Section key="about" title="about.">
-      <p className="text-lg font-light leading-relaxed">solynx. works across painting, drawing and sculpture, attending to the threshold where a surface becomes a space.</p>
-      <p className="caption mt-6 leading-relaxed">the practice is slow and reductive — each work an attempt to hold a single quiet moment long enough to be seen. lives and works between tokyo and berlin.</p>
+      <p className="text-lg font-light leading-relaxed">solynx is an abstract artist — the practice is intuitive and deeply emotional.</p>
+      <p className="caption mt-6 leading-relaxed">lives and works between zurich and seignosse.</p>
     </Section>,
     <Section key="hello" title="hello.">
       <div className="space-y-6 text-lg font-light">
-        <div><p className="caption">studio</p><a href="mailto:studio@solynx.art" className="hover:opacity-40 transition-opacity">studio@solynx.art</a></div>
-        <div><p className="caption">representation</p><p>galerie example, berlin</p></div>
-        <div><p className="caption">elsewhere</p><a href="https://instagram.com" target="_blank" rel="noreferrer" className="hover:opacity-40 transition-opacity">instagram</a></div>
+        <a href="mailto:hello@solynx.art" onClick={() => window.__lovableEvents?.track?.("project.contact_link_clicked", { link: "email" })} className="hover:opacity-40 transition-opacity">hello@solynx.art</a>
+        <div><p className="caption">studio</p><p>zurich. seignosse.</p></div>
+        <div><p className="caption">elsewhere</p><a href="https://www.instagram.com/solynx.art/" target="_blank" rel="noreferrer" onClick={() => window.__lovableEvents?.track?.("project.contact_link_clicked", { link: "instagram" })} className="hover:opacity-40 transition-opacity">instagram</a></div>
       </div>
     </Section>,
   ];
   const total = screens.length;
 
-  const go = useCallback((i: number) => {
+  const go = useCallback((i: number, method: "menu" | "scroll" = "scroll") => {
     if (lock.current) return;
     const next = Math.max(0, Math.min(total - 1, i));
     if (next === idx.current) return;
     lock.current = true;
     idx.current = next;
     setIndex(next);
+    const t = window.__lovableEvents?.track;
+    if (next >= 3 && next <= 7) t?.("project.artwork_viewed", { artwork: String(next - 2).padStart(2, "0") });
+    const sec = SECTION_AT[next];
+    if (sec) t?.("project.section_navigated", { section: sec, method });
     setTimeout(() => (lock.current = false), DURATION);
   }, [total]);
 
@@ -151,7 +157,7 @@ function Index() {
         </section>
       ))}
       {index > 0 && (
-        <button onClick={() => go(2)} className="caption fixed left-6 top-6 md:left-14 md:top-10 hover:opacity-40 transition-opacity">solynx.</button>
+        <button onClick={() => go(2, "menu")} className="caption fixed left-6 top-6 md:left-14 md:top-10 hover:opacity-40 transition-opacity">solynx.</button>
       )}
     </main>
   );
