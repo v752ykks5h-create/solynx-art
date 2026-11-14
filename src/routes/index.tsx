@@ -32,7 +32,7 @@ const w5 = w5Asset.url;
 const w6 = w6Asset.url;
 
 const works = [
-  { src: w6, title: "thoughts running wild", meta: "acrylic in raw canvas, 20 x 15 cm. 2024", pos: "items-start justify-start", w: "w-[80vw] md:w-[40vw]", mt: "mt-12 md:mt-16" },
+  { src: w6, title: "thoughts running wild", meta: "acrylic in raw canvas, 20 x 15 cm. 2024", pos: "items-start justify-start", w: "w-[58vw] md:w-[24vw]", mt: "mt-8" },
   { src: w2, title: "from tigers and cats", meta: "acrylic on paper, 2025", pos: "items-end justify-end", w: "w-[70vw] md:w-[32vw]" },
   { src: w3, title: "blah.", meta: "coal and acrylic on paper, 2025", pos: "items-center justify-center md:pr-[32vw]", w: "w-[58vw] md:w-[24vw]" },
   { src: w4, title: "2025", meta: "", pos: "items-center justify-center md:pl-[32vw]", w: "w-[58vw] md:w-[24vw]" },
