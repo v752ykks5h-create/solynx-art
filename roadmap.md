@@ -1,0 +1,3 @@
+- [x] Audit every screen, menu jump, wheel, touch, and keyboard navigation for fade/pause consistency.
+- [x] Apply the shared scroll-distance pause to all wheel/touch transitions without changing direct navigation.
+- [ ] Verify the complete screen sequence, reverse scrolling, direct menu jumps, and touch scrolling.

@@ -131,18 +131,15 @@ function Index() {
       if (lock.current) return;
       const direction = Math.sign(delta);
       if (!direction) return;
-      const betweenAboutAndHello = (idx.current === 9 && direction > 0) || (idx.current === 10 && direction < 0);
-      if (betweenAboutAndHello) {
-        const pause = accumulateScrollPause(scrollPause.current, delta, window.innerHeight);
-        scrollPause.current = pause.distance;
-        if (!pause.ready) return;
-      }
+      const pause = accumulateScrollPause(scrollPause.current, delta, window.innerHeight);
+      scrollPause.current = pause.distance;
+      if (!pause.ready) return;
       step(direction);
     };
     const onWheel = (e: WheelEvent) => {
       e.preventDefault();
       const delta = e.deltaY * (e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? window.innerHeight : 1);
-      if (Math.abs(delta) > 8) scrollStep(delta);
+      scrollStep(delta);
     };
     const onKey = (e: KeyboardEvent) => {
       if (["ArrowDown", "PageDown", " "].includes(e.key)) { e.preventDefault(); step(1); }

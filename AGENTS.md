@@ -29,5 +29,5 @@ use the editor.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
 
-- Keep about/contact in sequential screen order using the shared pinned dissolve, with a viewport-relative scroll-distance pause between them; this preserves consistent scrolling without full-screen sliding.
+- Use the shared pinned dissolve and viewport-relative scroll-distance pause for every wheel/touch screen transition; menu jumps and keyboard steps stay direct for accessible navigation.
 - Define transition timing and scroll-pause calculations in a browser-safe helper so concrete timing and distance rules can be tested independently.
