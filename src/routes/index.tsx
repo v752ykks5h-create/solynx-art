@@ -93,6 +93,7 @@ function Index() {
     <Section key="hello" title="hello.">
       <div className="space-y-6 text-lg font-light">
         <a href="mailto:hello@solynx.art" onClick={() => window.__lovableEvents?.track?.("project.contact_link_clicked", { link: "email" })} className="hover:opacity-40 transition-opacity">hello@solynx.art</a>
+        <div aria-hidden className="h-6" />
         <div><p className="caption">studio</p><p>zurich. seignosse.</p></div>
         <div><p className="caption">elsewhere</p><a href="https://www.instagram.com/solynx.art/" target="_blank" rel="noreferrer" onClick={() => window.__lovableEvents?.track?.("project.contact_link_clicked", { link: "instagram" })} className="hover:opacity-40 transition-opacity">instagram</a></div>
       </div>
