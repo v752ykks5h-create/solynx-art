@@ -4,7 +4,7 @@ import w1Asset from "@/assets/work-1.jpeg.asset.json";
 import w2Asset from "@/assets/work-2.jpg.asset.json";
 import w3Asset from "@/assets/work-3.jpg.asset.json";
 import w4Asset from "@/assets/work-4.jpg.asset.json";
-import w5 from "@/assets/work-5.jpg";
+import w5Asset from "@/assets/work-5.jpg.asset.json";
 
 const SECTION_AT: Record<number, string> = { 2: "menu", 3: "selected_works", 8: "projects", 9: "about", 10: "hello" };
 
@@ -27,13 +27,14 @@ const w1 = w1Asset.url;
 const w2 = w2Asset.url;
 const w3 = w3Asset.url;
 const w4 = w4Asset.url;
+const w5 = w5Asset.url;
 
 const works = [
   { src: w1, title: "in dreams", meta: "2024", pos: "items-start justify-start", w: "w-[80vw] md:w-[40vw]" },
   { src: w2, title: "from tigers and cats", meta: "acrylic on paper, 2025", pos: "items-end justify-end", w: "w-[70vw] md:w-[32vw]" },
   { src: w3, title: "blah.", meta: "coal and acrylic on paper, 2025", pos: "items-center justify-center md:pr-[16vw]", w: "w-[58vw] md:w-[24vw]" },
   { src: w4, title: "2025", meta: "", pos: "items-center justify-center md:pl-[16vw]", w: "w-[58vw] md:w-[24vw]" },
-  { src: w5, title: "point, line", meta: "ink on paper, 2026", pos: "items-end justify-center", w: "w-[70vw] md:w-[30vw]" },
+  { src: w5, title: "2026", meta: "", pos: "items-end justify-center", w: "w-[70vw] md:w-[30vw]" },
 ];
 
 const menu = [
