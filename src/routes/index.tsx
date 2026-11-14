@@ -75,7 +75,7 @@ function Index() {
     </div>,
     ...works.map((w, i) => (
       <div key={w.title} className={`flex h-full p-6 md:p-14 ${w.pos}`}>
-        <figure>
+        <figure className={"mt" in w ? w.mt : ""}>
           <img src={w.src} alt={w.title} className={w.w} loading="lazy" />
           <figcaption className="mt-4 flex justify-between gap-8">
             <span className="caption">{w.title}{w.meta ? ` — ${w.meta}` : ""}</span>
