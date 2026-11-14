@@ -115,10 +115,10 @@ function Index() {
       if (["ArrowDown", "PageDown", " "].includes(e.key)) { e.preventDefault(); step(1); }
       if (["ArrowUp", "PageUp"].includes(e.key)) { e.preventDefault(); step(-1); }
     };
-    const onTS = (e: TouchEvent) => (touchY.current = e.touches[0].clientY);
+    const onTS = (e: TouchEvent) => (touchY.current = (e.touches[0]?.clientY ?? 0));
     const onTM = (e: TouchEvent) => {
       if (touchY.current === null) return;
-      const d = touchY.current - e.touches[0].clientY;
+      const d = touchY.current - (e.touches[0]?.clientY ?? 0);
       if (Math.abs(d) > 40) { step(d > 0 ? 1 : -1); touchY.current = null; }
     };
     window.addEventListener("wheel", onWheel, { passive: false });
