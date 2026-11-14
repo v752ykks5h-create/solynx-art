@@ -5,8 +5,9 @@ import w2Asset from "@/assets/work-2.jpg.asset.json";
 import w3Asset from "@/assets/work-3.jpg.asset.json";
 import w4Asset from "@/assets/work-4.jpg.asset.json";
 import w5Asset from "@/assets/work-5.jpg.asset.json";
+import w6Asset from "@/assets/work-6.jpg.asset.json";
 
-const SECTION_AT: Record<number, string> = { 2: "menu", 3: "selected_works", 8: "projects", 9: "about", 10: "hello" };
+const SECTION_AT: Record<number, string> = { 2: "menu", 3: "selected_works", 9: "projects", 10: "about", 11: "hello" };
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -28,20 +29,22 @@ const w2 = w2Asset.url;
 const w3 = w3Asset.url;
 const w4 = w4Asset.url;
 const w5 = w5Asset.url;
+const w6 = w6Asset.url;
 
 const works = [
   { src: w1, title: "in dreams", meta: "2024", pos: "items-start justify-start", w: "w-[80vw] md:w-[40vw]" },
   { src: w2, title: "from tigers and cats", meta: "acrylic on paper, 2025", pos: "items-end justify-end", w: "w-[70vw] md:w-[32vw]" },
-  { src: w3, title: "blah.", meta: "coal and acrylic on paper, 2025", pos: "items-center justify-center md:pr-[16vw]", w: "w-[58vw] md:w-[24vw]" },
-  { src: w4, title: "2025", meta: "", pos: "items-center justify-center md:pl-[16vw]", w: "w-[58vw] md:w-[24vw]" },
+  { src: w3, title: "blah.", meta: "coal and acrylic on paper, 2025", pos: "items-center justify-center md:pr-[32vw]", w: "w-[58vw] md:w-[24vw]" },
+  { src: w4, title: "2025", meta: "", pos: "items-center justify-center md:pl-[32vw]", w: "w-[58vw] md:w-[24vw]" },
   { src: w5, title: "precious.", meta: "acrylic on canvas, 50 x 70 cm. 2025", pos: "items-end justify-center", w: "w-[80vw] md:w-[38vw]" },
+  { src: w6, title: "thoughts running wild", meta: "acrylic in raw canvas, 20 x 15 cm. 2024", pos: "items-center justify-center", w: "w-[58vw] md:w-[24vw]" },
 ];
 
 const menu = [
   { n: "01", label: "selected works.", target: 3 },
-  { n: "02", label: "projects.", target: 8 },
-  { n: "03", label: "about.", target: 9 },
-  { n: "04", label: "hello.", target: 10 },
+  { n: "02", label: "projects.", target: 9 },
+  { n: "03", label: "about.", target: 10 },
+  { n: "04", label: "hello.", target: 11 },
 ];
 
 function Index() {
@@ -76,7 +79,7 @@ function Index() {
           <img src={w.src} alt={w.title} className={w.w} loading="lazy" />
           <figcaption className="mt-4 flex justify-between gap-8">
             <span className="caption">{w.title}{w.meta ? ` — ${w.meta}` : ""}</span>
-            <span className="caption tabular-nums">{String(i + 1).padStart(2, "0")} | 05</span>
+            <span className="caption tabular-nums">{String(i + 1).padStart(2, "0")} | {String(works.length).padStart(2, "0")}</span>
           </figcaption>
         </figure>
       </div>
@@ -114,7 +117,7 @@ function Index() {
     idx.current = next;
     setIndex(next);
     const t = window.__lovableEvents?.track;
-    if (next >= 3 && next <= 7) t?.("project.artwork_viewed", { artwork: String(next - 2).padStart(2, "0") });
+    if (next >= 3 && next <= 8) t?.("project.artwork_viewed", { artwork: String(next - 2).padStart(2, "0") });
     const sec = SECTION_AT[next];
     if (sec) t?.("project.section_navigated", { section: sec, method });
     setTimeout(() => (lock.current = false), DURATION);
