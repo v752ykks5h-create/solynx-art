@@ -6,14 +6,6 @@ import w3 from "@/assets/work-3.jpg";
 import w4 from "@/assets/work-4.jpg";
 import w5 from "@/assets/work-5.jpg";
 
-declare global {
-  interface Window {
-    __lovableEvents?: {
-      track?: (event: string, properties?: Record<string, unknown>) => string | null;
-    };
-  }
-}
-
 const SECTION_AT: Record<number, string> = { 2: "menu", 3: "selected_works", 8: "projects", 9: "about", 10: "hello" };
 
 export const Route = createFileRoute("/")({
