@@ -3,7 +3,7 @@ import { useCallback, useEffect, useRef, useState, type ReactNode } from "react"
 import w1Asset from "@/assets/work-1.jpeg.asset.json";
 import w2Asset from "@/assets/work-2.jpg.asset.json";
 import w3Asset from "@/assets/work-3.jpg.asset.json";
-import w4 from "@/assets/work-4.jpg";
+import w4Asset from "@/assets/work-4.jpg.asset.json";
 import w5 from "@/assets/work-5.jpg";
 
 const SECTION_AT: Record<number, string> = { 2: "menu", 3: "selected_works", 8: "projects", 9: "about", 10: "hello" };
@@ -26,12 +26,13 @@ const DURATION = 1600;
 const w1 = w1Asset.url;
 const w2 = w2Asset.url;
 const w3 = w3Asset.url;
+const w4 = w4Asset.url;
 
 const works = [
   { src: w1, title: "in dreams", meta: "2024", pos: "items-start justify-start", w: "w-[80vw] md:w-[40vw]" },
   { src: w2, title: "from tigers and cats", meta: "acrylic on paper, 2025", pos: "items-end justify-end", w: "w-[70vw] md:w-[32vw]" },
   { src: w3, title: "blah.", meta: "coal and acrylic on paper, 2025", pos: "items-center justify-center md:pr-[16vw]", w: "w-[58vw] md:w-[24vw]" },
-  { src: w4, title: "rest", meta: "carrara marble, 2023", pos: "items-center justify-center md:pl-[16vw]", w: "w-[58vw] md:w-[24vw]" },
+  { src: w4, title: "2025", meta: "", pos: "items-center justify-center md:pl-[16vw]", w: "w-[58vw] md:w-[24vw]" },
   { src: w5, title: "point, line", meta: "ink on paper, 2026", pos: "items-end justify-center", w: "w-[70vw] md:w-[30vw]" },
 ];
 
@@ -73,7 +74,7 @@ function Index() {
         <figure>
           <img src={w.src} alt={w.title} className={w.w} loading="lazy" />
           <figcaption className="mt-4 flex justify-between gap-8">
-            <span className="caption">{w.title} — {w.meta}</span>
+            <span className="caption">{w.title}{w.meta ? ` — ${w.meta}` : ""}</span>
             <span className="caption tabular-nums">{String(i + 1).padStart(2, "0")} | 05</span>
           </figcaption>
         </figure>
