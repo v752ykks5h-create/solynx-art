@@ -26,7 +26,7 @@ const DURATION = 1600;
 const w1 = w1Asset.url;
 
 const works = [
-  { src: w1, title: "untitled (gradients)", meta: "acrylic on canvas, 2024", pos: "items-start justify-start", w: "w-[80vw] md:w-[40vw]" },
+  { src: w1, title: "in dreams", meta: "2024", pos: "items-start justify-start", w: "w-[80vw] md:w-[40vw]" },
   { src: w2, title: "horizon, held", meta: "charcoal on paper, 2024", pos: "items-end justify-end", w: "w-[70vw] md:w-[32vw]" },
   { src: w3, title: "fog study iii", meta: "acrylic on canvas, 2025", pos: "items-center justify-center md:pr-[16vw]", w: "w-[58vw] md:w-[24vw]" },
   { src: w4, title: "rest", meta: "carrara marble, 2023", pos: "items-center justify-center md:pl-[16vw]", w: "w-[58vw] md:w-[24vw]" },
@@ -52,8 +52,8 @@ function Index() {
     </div>,
     <div key="reveal" className="flex h-full items-end justify-end p-6 md:p-14">
       <figure className="flex flex-col items-end">
-        <img src={w1} alt="untitled (gradients)" className="w-[80vw] md:w-[40vw]" />
-        <figcaption className="caption mt-4">untitled (gradients), 2024</figcaption>
+        <img src={w1} alt="in dreams" className="w-[80vw] md:w-[40vw]" />
+        <figcaption className="caption mt-4">in dreams. 2024</figcaption>
       </figure>
     </div>,
     <div key="menu" className="flex h-full items-end justify-start p-6 md:p-14">
