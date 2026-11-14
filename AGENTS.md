@@ -29,4 +29,5 @@ use the editor.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
 
-- Keep the final about/contact screens vertically sequenced within the pinned transition engine so scrolling places contact below about rather than dissolving overlapping text.
+- Keep about/contact in sequential screen order using the shared pinned dissolve, with a viewport-relative scroll-distance pause between them; this preserves consistent scrolling without full-screen sliding.
+- Define transition timing and scroll-pause calculations in a browser-safe helper so concrete timing and distance rules can be tested independently.

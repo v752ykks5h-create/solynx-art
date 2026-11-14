@@ -6,6 +6,7 @@ import w3Asset from "@/assets/work-3.jpg.asset.json";
 import w4Asset from "@/assets/work-4.jpg.asset.json";
 import w5Asset from "@/assets/work-5.jpg.asset.json";
 import w6Asset from "@/assets/work-6.jpg.asset.json";
+import { accumulateScrollPause, TRANSITION_DURATION_MS } from "@/lib/screen-transition";
 
 const SECTION_AT: Record<number, string> = { 2: "menu", 3: "selected_works", 8: "projects", 9: "about", 10: "hello" };
 
@@ -23,7 +24,7 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-const DURATION = 1600;
+const DURATION = TRANSITION_DURATION_MS;
 const w1 = w1Asset.url;
 const w2 = w2Asset.url;
 const w3 = w3Asset.url;
@@ -51,6 +52,7 @@ function Index() {
   const lock = useRef(false);
   const touchY = useRef<number | null>(null);
   const idx = useRef(0);
+  const scrollPause = useRef(0);
 
   const screens: ReactNode[] = [
     <div key="land" className="flex h-full items-center justify-center">
@@ -113,6 +115,7 @@ function Index() {
     const next = Math.max(0, Math.min(total - 1, i));
     if (next === idx.current) return;
     lock.current = true;
+    scrollPause.current = 0;
     idx.current = next;
     setIndex(next);
     const t = window.__lovableEvents?.track;
@@ -124,7 +127,23 @@ function Index() {
 
   useEffect(() => {
     const step = (d: number) => go(idx.current + d);
-    const onWheel = (e: WheelEvent) => { e.preventDefault(); if (Math.abs(e.deltaY) > 8) step(e.deltaY > 0 ? 1 : -1); };
+    const scrollStep = (delta: number) => {
+      if (lock.current) return;
+      const direction = Math.sign(delta);
+      if (!direction) return;
+      const betweenAboutAndHello = (idx.current === 9 && direction > 0) || (idx.current === 10 && direction < 0);
+      if (betweenAboutAndHello) {
+        const pause = accumulateScrollPause(scrollPause.current, delta, window.innerHeight);
+        scrollPause.current = pause.distance;
+        if (!pause.ready) return;
+      }
+      step(direction);
+    };
+    const onWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      const delta = e.deltaY * (e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? window.innerHeight : 1);
+      if (Math.abs(delta) > 8) scrollStep(delta);
+    };
     const onKey = (e: KeyboardEvent) => {
       if (["ArrowDown", "PageDown", " "].includes(e.key)) { e.preventDefault(); step(1); }
       if (["ArrowUp", "PageUp"].includes(e.key)) { e.preventDefault(); step(-1); }
@@ -133,7 +152,7 @@ function Index() {
     const onTM = (e: TouchEvent) => {
       if (touchY.current === null) return;
       const d = touchY.current - (e.touches[0]?.clientY ?? 0);
-      if (Math.abs(d) > 40) { step(d > 0 ? 1 : -1); touchY.current = null; }
+      if (Math.abs(d) > 40) { scrollStep(d); touchY.current = e.touches[0]?.clientY ?? null; }
     };
     window.addEventListener("wheel", onWheel, { passive: false });
     window.addEventListener("keydown", onKey);
@@ -156,7 +175,7 @@ function Index() {
           className="absolute inset-0"
           style={{
             opacity: i === index ? 1 : 0,
-            transform: `translateY(${i === index ? 0 : i < index ? (i >= 9 && index >= 9 ? "-100vh" : "-2vh") : (i >= 9 && index >= 9 ? "100vh" : "2vh")})`,
+            transform: `translateY(${i === index ? 0 : i < index ? "-2vh" : "2vh"})`,
             transition: `opacity ${DURATION}ms cubic-bezier(0.65,0,0.35,1), transform ${DURATION}ms cubic-bezier(0.65,0,0.35,1)`,
             pointerEvents: i === index ? "auto" : "none",
           }}
