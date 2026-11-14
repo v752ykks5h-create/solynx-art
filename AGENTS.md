@@ -28,3 +28,5 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+- Keep the final about/contact screens vertically sequenced within the pinned transition engine so scrolling places contact below about rather than dissolving overlapping text.

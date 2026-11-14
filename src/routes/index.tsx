@@ -7,7 +7,7 @@ import w4Asset from "@/assets/work-4.jpg.asset.json";
 import w5Asset from "@/assets/work-5.jpg.asset.json";
 import w6Asset from "@/assets/work-6.jpg.asset.json";
 
-const SECTION_AT: Record<number, string> = { 2: "menu", 3: "selected_works", 9: "projects", 10: "about", 11: "hello" };
+const SECTION_AT: Record<number, string> = { 2: "menu", 3: "selected_works", 8: "projects", 9: "about", 10: "hello" };
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -37,14 +37,13 @@ const works = [
   { src: w3, title: "blah.", meta: "coal and acrylic on paper, 2025", pos: "items-center justify-center md:pr-[32vw]", w: "w-[58vw] md:w-[24vw]" },
   { src: w4, title: "2025", meta: "", pos: "items-center justify-center md:pl-[32vw]", w: "w-[58vw] md:w-[24vw]" },
   { src: w5, title: "precious.", meta: "acrylic on canvas, 50 x 70 cm. 2025", pos: "items-end justify-center", w: "w-[80vw] md:w-[38vw]" },
-  { src: w1, title: "in dreams", meta: "2024", pos: "items-center justify-center", w: "w-[58vw] md:w-[24vw]" },
 ];
 
 const menu = [
   { n: "01", label: "selected works.", target: 3 },
-  { n: "02", label: "projects.", target: 9 },
-  { n: "03", label: "about.", target: 10 },
-  { n: "04", label: "hello.", target: 11 },
+  { n: "02", label: "projects.", target: 8 },
+  { n: "03", label: "about.", target: 9 },
+  { n: "04", label: "hello.", target: 10 },
 ];
 
 function Index() {
@@ -94,11 +93,11 @@ function Index() {
         ))}
       </ul>
     </Section>,
-    <Section key="about" title="about.">
+    <Section key="about" title="about." sequential>
       <p className="text-lg font-light leading-relaxed">solynx is an abstract artist — the practice is intuitive and deeply emotional.</p>
       <p className="caption mt-6 leading-relaxed">lives and works between zurich and seignosse.</p>
     </Section>,
-    <Section key="hello" title="hello.">
+    <Section key="hello" title="hello." sequential inlineTitle>
       <div className="space-y-6 text-lg font-light">
         <a href="mailto:hello@solynx.art" onClick={() => window.__lovableEvents?.track?.("project.contact_link_clicked", { link: "email" })} className="hover:opacity-40 transition-opacity">hello@solynx.art</a>
         <div aria-hidden className="h-6" />
@@ -117,7 +116,7 @@ function Index() {
     idx.current = next;
     setIndex(next);
     const t = window.__lovableEvents?.track;
-    if (next >= 3 && next <= 8) t?.("project.artwork_viewed", { artwork: String(next - 2).padStart(2, "0") });
+    if (next >= 3 && next < 3 + works.length) t?.("project.artwork_viewed", { artwork: String(next - 2).padStart(2, "0") });
     const sec = SECTION_AT[next];
     if (sec) t?.("project.section_navigated", { section: sec, method });
     setTimeout(() => (lock.current = false), DURATION);
@@ -157,7 +156,7 @@ function Index() {
           className="absolute inset-0"
           style={{
             opacity: i === index ? 1 : 0,
-            transform: `translateY(${i === index ? 0 : i < index ? "-2vh" : "2vh"})`,
+            transform: `translateY(${i === index ? 0 : i < index ? (i >= 9 && index >= 9 ? "-100vh" : "-2vh") : (i >= 9 && index >= 9 ? "100vh" : "2vh")})`,
             transition: `opacity ${DURATION}ms cubic-bezier(0.65,0,0.35,1), transform ${DURATION}ms cubic-bezier(0.65,0,0.35,1)`,
             pointerEvents: i === index ? "auto" : "none",
           }}
@@ -172,12 +171,12 @@ function Index() {
   );
 }
 
-function Section({ title, children }: { title: string; children: ReactNode }) {
+function Section({ title, children, sequential = false, inlineTitle = false }: { title: string; children: ReactNode; sequential?: boolean; inlineTitle?: boolean }) {
   return (
-    <div className="flex h-full items-center p-6 md:p-14">
-      <div className="mx-auto grid w-full max-w-5xl gap-10 md:grid-cols-[1fr_2fr]">
+    <div className={`flex h-full p-6 md:p-14 ${sequential ? "items-start pt-[30vh] md:pt-[30vh]" : "items-center"}`}>
+      <div className={`mx-auto grid w-full max-w-5xl items-baseline ${inlineTitle ? "grid-cols-[minmax(0,1fr)_minmax(0,2fr)] gap-4 md:gap-10" : "gap-10 md:grid-cols-[1fr_2fr]"}`}>
         <h2 className="text-3xl font-light tracking-[0.04em]">{title}</h2>
-        <div className="max-w-xl">{children}</div>
+        <div className="min-w-0 max-w-xl">{children}</div>
       </div>
     </div>
   );
