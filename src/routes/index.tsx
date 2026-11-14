@@ -23,6 +23,7 @@ export const Route = createFileRoute("/")({
 });
 
 const DURATION = 1600;
+const w1 = w1Asset.url;
 
 const works = [
   { src: w1, title: "untitled (gradients)", meta: "acrylic on canvas, 2024", pos: "items-start justify-start", w: "w-[80vw] md:w-[40vw]" },
