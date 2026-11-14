@@ -41,6 +41,7 @@ function Index() {
   const [index, setIndex] = useState(0);
   const lock = useRef(false);
   const touchY = useRef<number | null>(null);
+  const idx = useRef(0);
 
   const screens: ReactNode[] = [
     <div key="land" className="flex h-full items-center justify-center">
@@ -99,17 +100,16 @@ function Index() {
 
   const go = useCallback((i: number) => {
     if (lock.current) return;
-    setIndex((cur) => {
-      const next = Math.max(0, Math.min(total - 1, i));
-      if (next === cur) return cur;
-      lock.current = true;
-      setTimeout(() => (lock.current = false), DURATION);
-      return next;
-    });
+    const next = Math.max(0, Math.min(total - 1, i));
+    if (next === idx.current) return;
+    lock.current = true;
+    idx.current = next;
+    setIndex(next);
+    setTimeout(() => (lock.current = false), DURATION);
   }, [total]);
 
   useEffect(() => {
-    const step = (d: number) => setIndex((cur) => { go(cur + d); return cur; });
+    const step = (d: number) => go(idx.current + d);
     const onWheel = (e: WheelEvent) => { e.preventDefault(); if (Math.abs(e.deltaY) > 8) step(e.deltaY > 0 ? 1 : -1); };
     const onKey = (e: KeyboardEvent) => {
       if (["ArrowDown", "PageDown", " "].includes(e.key)) { e.preventDefault(); step(1); }
