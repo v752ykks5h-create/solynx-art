@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "events": {
+    "project.artwork_viewed": {
+      "event_schema_version": 1,
+      "description": "A selected work screen was shown.",
+      "privacy": {
+        "contains_pii": false,
+        "purpose": "product_analytics"
+      },
+      "properties_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "artwork"
+        ],
+        "properties": {
+          "artwork": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "project.contact_link_clicked": {
+      "event_schema_version": 1,
+      "description": "Email or instagram link in hello. was clicked.",
+      "privacy": {
+        "contains_pii": false,
+        "purpose": "product_analytics"
+      },
+      "properties_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "link"
+        ],
+        "properties": {
+          "link": {
+            "type": "string",
+            "enum": [
+              "email",
+              "instagram"
+            ]
+          }
+        }
+      }
+    },
+    "project.section_navigated": {
+      "event_schema_version": 1,
+      "description": "Visitor arrived at a section, via menu click or scrolling.",
+      "privacy": {
+        "contains_pii": false,
+        "purpose": "product_analytics"
+      },
+      "properties_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "section",
+          "method"
+        ],
+        "properties": {
+          "section": {
+            "type": "string"
+          },
+          "method": {
+            "type": "string",
+            "enum": [
+              "menu",
+              "scroll"
+            ]
+          }
+        }
+      }
+    }
+  }
+}
