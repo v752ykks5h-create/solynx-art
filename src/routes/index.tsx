@@ -1,23 +1,169 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
+import w1 from "@/assets/work-1.jpg";
+import w2 from "@/assets/work-2.jpg";
+import w3 from "@/assets/work-3.jpg";
+import w4 from "@/assets/work-4.jpg";
+import w5 from "@/assets/work-5.jpg";
 
-// The home route ships no og:image, so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "solynx." },
+      { name: "description", content: "solynx. — selected works, projects, about and contact." },
+      { property: "og:title", content: "solynx." },
+      { property: "og:description", content: "selected works, projects, about and contact." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
+const DURATION = 1600;
+
+const works = [
+  { src: w1, title: "untitled (ochre field)", meta: "oil on linen, 2025", pos: "items-start justify-start", w: "w-[58vw] md:w-[26vw]" },
+  { src: w2, title: "horizon, held", meta: "charcoal on paper, 2024", pos: "items-end justify-end", w: "w-[70vw] md:w-[32vw]" },
+  { src: w3, title: "fog study iii", meta: "acrylic on canvas, 2025", pos: "items-center justify-center md:pr-[16vw]", w: "w-[58vw] md:w-[24vw]" },
+  { src: w4, title: "rest", meta: "carrara marble, 2023", pos: "items-center justify-center md:pl-[16vw]", w: "w-[58vw] md:w-[24vw]" },
+  { src: w5, title: "point, line", meta: "ink on paper, 2026", pos: "items-end justify-center", w: "w-[70vw] md:w-[30vw]" },
+];
+
+const menu = [
+  { n: "01", label: "selected works.", target: 3 },
+  { n: "02", label: "projects.", target: 8 },
+  { n: "03", label: "about.", target: 9 },
+  { n: "04", label: "hello.", target: 10 },
+];
+
 function Index() {
+  const [index, setIndex] = useState(0);
+  const lock = useRef(false);
+  const touchY = useRef<number | null>(null);
+  const idx = useRef(0);
+
+  const screens: ReactNode[] = [
+    <div key="land" className="flex h-full items-center justify-center">
+      <h1 className="text-4xl font-light tracking-[0.08em] md:text-6xl">solynx.</h1>
+    </div>,
+    <div key="reveal" className="flex h-full items-end justify-end p-6 md:p-14">
+      <figure className="flex flex-col items-end">
+        <img src={w1} alt="untitled (ochre field)" className="w-[60vw] md:w-[28vw]" width={800} height={1008} />
+        <figcaption className="caption mt-4">untitled (ochre field), 2025</figcaption>
+      </figure>
+    </div>,
+    <div key="menu" className="flex h-full items-end justify-start p-6 md:p-14">
+      <nav className="flex flex-col gap-3">
+        {menu.map((m) => (
+          <button key={m.n} onClick={() => go(m.target)} className="group flex items-baseline gap-6 text-left text-2xl font-light tracking-[0.04em] md:text-4xl">
+            <span className="caption w-6">{m.n}</span>
+            <span className="transition-opacity duration-500 group-hover:opacity-40">{m.label}</span>
+          </button>
+        ))}
+      </nav>
+    </div>,
+    ...works.map((w, i) => (
+      <div key={w.title} className={`flex h-full p-6 md:p-14 ${w.pos}`}>
+        <figure>
+          <img src={w.src} alt={w.title} className={w.w} loading="lazy" />
+          <figcaption className="mt-4 flex justify-between gap-8">
+            <span className="caption">{w.title} — {w.meta}</span>
+            <span className="caption tabular-nums">{String(i + 1).padStart(2, "0")} | 05</span>
+          </figcaption>
+        </figure>
+      </div>
+    )),
+    <Section key="projects" title="projects.">
+      <ul className="space-y-6">
+        {[["2026", "quiet architecture", "kunsthalle basel"], ["2025", "between weather", "public commission, kyoto"], ["2024", "held light", "residency, iceland"]].map(([y, t, p]) => (
+          <li key={t} className="grid grid-cols-[4rem_1fr] gap-4 border-t border-border pt-4">
+            <span className="caption">{y}</span>
+            <div><p className="text-lg font-light">{t}</p><p className="caption mt-1">{p}</p></div>
+          </li>
+        ))}
+      </ul>
+    </Section>,
+    <Section key="about" title="about.">
+      <p className="text-lg font-light leading-relaxed">solynx. works across painting, drawing and sculpture, attending to the threshold where a surface becomes a space.</p>
+      <p className="caption mt-6 leading-relaxed">the practice is slow and reductive — each work an attempt to hold a single quiet moment long enough to be seen. lives and works between tokyo and berlin.</p>
+    </Section>,
+    <Section key="hello" title="hello.">
+      <div className="space-y-6 text-lg font-light">
+        <div><p className="caption">studio</p><a href="mailto:studio@solynx.art" className="hover:opacity-40 transition-opacity">studio@solynx.art</a></div>
+        <div><p className="caption">representation</p><p>galerie example, berlin</p></div>
+        <div><p className="caption">elsewhere</p><a href="https://instagram.com" target="_blank" rel="noreferrer" className="hover:opacity-40 transition-opacity">instagram</a></div>
+      </div>
+    </Section>,
+  ];
+  const total = screens.length;
+
+  const go = useCallback((i: number) => {
+    if (lock.current) return;
+    const next = Math.max(0, Math.min(total - 1, i));
+    if (next === idx.current) return;
+    lock.current = true;
+    idx.current = next;
+    setIndex(next);
+    setTimeout(() => (lock.current = false), DURATION);
+  }, [total]);
+
+  useEffect(() => {
+    const step = (d: number) => go(idx.current + d);
+    const onWheel = (e: WheelEvent) => { e.preventDefault(); if (Math.abs(e.deltaY) > 8) step(e.deltaY > 0 ? 1 : -1); };
+    const onKey = (e: KeyboardEvent) => {
+      if (["ArrowDown", "PageDown", " "].includes(e.key)) { e.preventDefault(); step(1); }
+      if (["ArrowUp", "PageUp"].includes(e.key)) { e.preventDefault(); step(-1); }
+    };
+    const onTS = (e: TouchEvent) => (touchY.current = (e.touches[0]?.clientY ?? 0));
+    const onTM = (e: TouchEvent) => {
+      if (touchY.current === null) return;
+      const d = touchY.current - (e.touches[0]?.clientY ?? 0);
+      if (Math.abs(d) > 40) { step(d > 0 ? 1 : -1); touchY.current = null; }
+    };
+    window.addEventListener("wheel", onWheel, { passive: false });
+    window.addEventListener("keydown", onKey);
+    window.addEventListener("touchstart", onTS, { passive: true });
+    window.addEventListener("touchmove", onTM, { passive: true });
+    return () => {
+      window.removeEventListener("wheel", onWheel);
+      window.removeEventListener("keydown", onKey);
+      window.removeEventListener("touchstart", onTS);
+      window.removeEventListener("touchmove", onTM);
+    };
+  }, [go]);
+
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <main className="fixed inset-0 overflow-hidden overscroll-none bg-background text-foreground">
+      {screens.map((s, i) => (
+        <section
+          key={i}
+          aria-hidden={i !== index}
+          className="absolute inset-0"
+          style={{
+            opacity: i === index ? 1 : 0,
+            transform: `translateY(${i === index ? 0 : i < index ? "-2vh" : "2vh"})`,
+            transition: `opacity ${DURATION}ms cubic-bezier(0.65,0,0.35,1), transform ${DURATION}ms cubic-bezier(0.65,0,0.35,1)`,
+            pointerEvents: i === index ? "auto" : "none",
+          }}
+        >
+          {s}
+        </section>
+      ))}
+      {index > 0 && (
+        <button onClick={() => go(2)} className="caption fixed left-6 top-6 md:left-14 md:top-10 hover:opacity-40 transition-opacity">solynx.</button>
+      )}
+    </main>
+  );
+}
+
+function Section({ title, children }: { title: string; children: ReactNode }) {
+  return (
+    <div className="flex h-full items-center p-6 md:p-14">
+      <div className="mx-auto grid w-full max-w-5xl gap-10 md:grid-cols-[1fr_2fr]">
+        <h2 className="text-3xl font-light tracking-[0.04em]">{title}</h2>
+        <div className="max-w-xl">{children}</div>
+      </div>
     </div>
   );
 }
