@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import w1Asset from "@/assets/work-1.jpeg.asset.json";
 import w2Asset from "@/assets/work-2.jpg.asset.json";
-import w3 from "@/assets/work-3.jpg";
+import w3Asset from "@/assets/work-3.jpg.asset.json";
 import w4 from "@/assets/work-4.jpg";
 import w5 from "@/assets/work-5.jpg";
 
@@ -25,11 +25,12 @@ export const Route = createFileRoute("/")({
 const DURATION = 1600;
 const w1 = w1Asset.url;
 const w2 = w2Asset.url;
+const w3 = w3Asset.url;
 
 const works = [
   { src: w1, title: "in dreams", meta: "2024", pos: "items-start justify-start", w: "w-[80vw] md:w-[40vw]" },
   { src: w2, title: "from tigers and cats", meta: "acrylic on paper, 2025", pos: "items-end justify-end", w: "w-[70vw] md:w-[32vw]" },
-  { src: w3, title: "fog study iii", meta: "acrylic on canvas, 2025", pos: "items-center justify-center md:pr-[16vw]", w: "w-[58vw] md:w-[24vw]" },
+  { src: w3, title: "blah.", meta: "coal and acrylic on paper, 2025", pos: "items-center justify-center md:pr-[16vw]", w: "w-[58vw] md:w-[24vw]" },
   { src: w4, title: "rest", meta: "carrara marble, 2023", pos: "items-center justify-center md:pl-[16vw]", w: "w-[58vw] md:w-[24vw]" },
   { src: w5, title: "point, line", meta: "ink on paper, 2026", pos: "items-end justify-center", w: "w-[70vw] md:w-[30vw]" },
 ];
