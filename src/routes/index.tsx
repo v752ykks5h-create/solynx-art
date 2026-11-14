@@ -78,7 +78,7 @@ function Index() {
     )),
     <Section key="projects" title="projects.">
       <ul className="space-y-6">
-        {[["2024", "gradients.", "private exhibition (invitational)", "secret location"], ["2026", "work in progress.", "coming soon", ""]].map(([y, t, p, l]) => (
+        {[["2026", "work in progress.", "coming soon", ""], ["2024", "gradients.", "private exhibition (invitational)", "secret location"]].map(([y, t, p, l]) => (
           <li key={t} className="grid grid-cols-[4rem_1fr] gap-4 border-t border-border pt-4">
             <span className="caption">{y}</span>
             <div><p className="text-lg font-light">{t}</p><p className="caption mt-1">{p}</p>{l && <p className="caption mt-1">{l}</p>}</div>
