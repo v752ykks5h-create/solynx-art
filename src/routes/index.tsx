@@ -96,7 +96,7 @@ function Index() {
       </ul>
     </Section>,
     <Section key="about" title="about." sequential>
-      <p className="text-lg font-light leading-relaxed">solynx is an abstract artist — the practice is intuitive and deeply emotional.</p>
+      <p className="text-lg font-light leading-relaxed">solynx is an abstract artist. surfer. scientist. innovator. — the practice is intuitive and deeply emotional.</p>
       <p className="caption mt-6 leading-relaxed">lives and works between zurich and seignosse.</p>
     </Section>,
     <Section key="hello" title="hello." sequential inlineTitle>
