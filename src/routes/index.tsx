@@ -1,11 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
-import w1Asset from "@/assets/work-1.jpeg.asset.json";
-import w2Asset from "@/assets/work-2.jpg.asset.json";
-import w3Asset from "@/assets/work-3.jpg.asset.json";
-import w4Asset from "@/assets/work-4.jpg.asset.json";
-import w5Asset from "@/assets/work-5.jpg.asset.json";
-import w6Asset from "@/assets/work-6.jpg.asset.json";
+import w1Asset from "@/assets/work-1.jpg";
+import w2Asset from "@/assets/work-2.jpg";
+import w3Asset from "@/assets/work-3.jpg";
+import w4Asset from "@/assets/work-4.jpg";
+import w5Asset from "@/assets/work-5.jpg";
+import w6Asset from "@/assets/work-6.jpg";
 import { accumulateScrollPause, TRANSITION_DURATION_MS } from "@/lib/screen-transition";
 
 const SECTION_AT: Record<number, string> = { 2: "menu", 3: "selected_works", 8: "projects", 9: "about", 10: "hello" };
