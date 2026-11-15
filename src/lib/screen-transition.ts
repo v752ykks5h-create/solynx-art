@@ -4,6 +4,10 @@ export const MOBILE_TRANSITION_DURATION_MS = 1200;
 export const DESKTOP_SCROLL_PAUSE_VH = 60;
 export const MOBILE_SCROLL_PAUSE_VH = 20;
 
+// Compatibility exports so older imports don't cause missing export errors
+export const TRANSITION_DURATION_MS = DESKTOP_TRANSITION_DURATION_MS;
+export const SCROLL_PAUSE_VH = DESKTOP_SCROLL_PAUSE_VH;
+
 export const isMobile = () => typeof window !== 'undefined' && window.innerWidth < 768;
 
 export const getTransitionDuration = () => isMobile() ? MOBILE_TRANSITION_DURATION_MS : DESKTOP_TRANSITION_DURATION_MS;
