@@ -9,7 +9,7 @@ export const isMobile = () => typeof window !== 'undefined' && window.innerWidth
 export const getTransitionDuration = () => isMobile() ? MOBILE_TRANSITION_DURATION_MS : DESKTOP_TRANSITION_DURATION_MS;
 export const getScrollPauseVh = () => isMobile() ? MOBILE_SCROLL_PAUSE_VH : DESKTOP_SCROLL_PAUSE_VH;
 
-export function accumulateScrollPause(current: number, delta: number, viewportHeight: number, pauseVh: number = SCROLL_PAUSE_VH) {
+export function accumulateScrollPause(current: number, delta: number, viewportHeight: number, pauseVh: number = DESKTOP_SCROLL_PAUSE_VH) {
   const distance = Math.sign(current) === Math.sign(delta) ? current + delta : delta;
   return { distance, ready: Math.abs(distance) >= viewportHeight * pauseVh / 100 };
 }
