@@ -25,19 +25,13 @@ export const Route = createFileRoute("/")({
 });
 
 const DURATION = TRANSITION_DURATION_MS;
-const w1 = w1Asset.url;
-const w2 = w2Asset.url;
-const w3 = w3Asset.url;
-const w4 = w4Asset.url;
-const w5 = w5Asset.url;
-const w6 = w6Asset.url;
 
 const works = [
-  { src: w6, title: "thoughts running wild", meta: "acrylic in raw canvas, 20 x 15 cm. 2024", pos: "items-start justify-start", w: "w-[58vw] md:w-[24vw]", mt: "mt-8" },
-  { src: w2, title: "from tigers and cats", meta: "acrylic on paper, 2025", pos: "items-end justify-end", w: "w-[70vw] md:w-[32vw]" },
-  { src: w3, title: "blah.", meta: "coal and acrylic on paper, 2025", pos: "items-center justify-center md:pr-[32vw]", w: "w-[58vw] md:w-[24vw]" },
-  { src: w4, title: "2025", meta: "", pos: "items-center justify-center md:pl-[32vw]", w: "w-[58vw] md:w-[24vw]", cmt: "mt-8" },
-  { src: w5, title: "precious.", meta: "acrylic on canvas, 50 x 70 cm. 2025", pos: "items-end justify-center", w: "w-[80vw] md:w-[38vw]" },
+  { src: w2Asset, title: "thoughts running wild", meta: "acrylic in raw canvas, 20 x 15 cm. 2024", pos: "items-start justify-start", w: "w-[58vw] md:w-[24vw]", mt: "mt-8" },
+  { src: w3Asset, title: "from tigers and cats", meta: "acrylic on paper, 2025", pos: "items-end justify-end", w: "w-[70vw] md:w-[32vw]" },
+  { src: w4Asset, title: "blah.", meta: "coal and acrylic on paper, 2025", pos: "items-center justify-center md:pr-[32vw]", w: "w-[58vw] md:w-[24vw]" },
+  { src: w5Asset, title: "2025", meta: "", pos: "items-center justify-center md:pl-[32vw]", w: "w-[58vw] md:w-[24vw]", cmt: "mt-8" },
+  { src: w6Asset, title: "precious.", meta: "acrylic on canvas, 50 x 70 cm. 2025", pos: "items-end justify-center", w: "w-[80vw] md:w-[38vw]" },
 ];
 
 const menu = [
@@ -60,7 +54,7 @@ function Index() {
     </div>,
     <div key="reveal" className="flex h-full items-end justify-end p-6 md:p-14">
       <figure className="flex flex-col items-end">
-        <img src={w1} alt="in dreams" className="w-[80vw] md:w-[40vw]" />
+        <img src={w1Asset} alt="in dreams" className="w-[80vw] md:w-[40vw]" />
         <figcaption className="caption mt-4">in dreams. 2024</figcaption>
       </figure>
     </div>,
