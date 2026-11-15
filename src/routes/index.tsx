@@ -6,7 +6,7 @@ import w3Asset from "@/assets/work-3.jpg";
 import w4Asset from "@/assets/work-4.jpg";
 import w5Asset from "@/assets/work-5.jpg";
 import w6Asset from "@/assets/work-6.jpg";
-import { accumulateScrollPause, TRANSITION_DURATION_MS } from "@/lib/screen-transition";
+import { accumulateScrollPause, SCROLL_PAUSE_VH, TRANSITION_DURATION_MS } from "@/lib/screen-transition";
 
 const SECTION_AT: Record<number, string> = { 2: "menu", 3: "selected_works", 8: "projects", 9: "about", 10: "hello" };
 
@@ -24,10 +24,9 @@ export const Route = createFileRoute("/")({
       { rel: "icon", href: "/favicon.ico" },
     ],
   }),
-  component: Index,
+  component: () => <Index />,
 });
 
-const DURATION = TRANSITION_DURATION_MS;
 
 const works = [
   { src: w2Asset, title: "thoughts running wild", meta: "acrylic in raw canvas, 20 x 15 cm. 2024", pos: "items-start justify-start", w: "w-[58vw] md:w-[24vw]", mt: "mt-8" },
@@ -44,7 +43,8 @@ const menu = [
   { n: "04", label: "hello.", target: 10 },
 ];
 
-function Index() {
+export function Index({ duration = TRANSITION_DURATION_MS, pauseVh = SCROLL_PAUSE_VH, label }: { duration?: number; pauseVh?: number; label?: string } = {}) {
+  const DURATION = duration;
   const [index, setIndex] = useState(0);
   const lock = useRef(false);
   const touchY = useRef<number | null>(null);
@@ -120,7 +120,7 @@ function Index() {
     const sec = SECTION_AT[next];
     if (sec) t?.("project.section_navigated", { section: sec, method });
     setTimeout(() => (lock.current = false), DURATION);
-  }, [total]);
+  }, [total, DURATION]);
 
   useEffect(() => {
     const step = (d: number) => go(idx.current + d);
@@ -128,7 +128,7 @@ function Index() {
       if (lock.current) return;
       const direction = Math.sign(delta);
       if (!direction) return;
-      const pause = accumulateScrollPause(scrollPause.current, delta, window.innerHeight);
+      const pause = accumulateScrollPause(scrollPause.current, delta, window.innerHeight, pauseVh);
       scrollPause.current = pause.distance;
       if (!pause.ready) return;
       step(direction);
@@ -158,7 +158,7 @@ function Index() {
       window.removeEventListener("touchstart", onTS);
       window.removeEventListener("touchmove", onTM);
     };
-  }, [go]);
+  }, [go, pauseVh]);
 
   return (
     <main className="fixed inset-0 overflow-hidden overscroll-none bg-background text-foreground">
@@ -180,6 +180,7 @@ function Index() {
       {index > 0 && (
         <button onClick={() => go(2, "menu")} className="caption fixed left-6 top-6 md:left-14 md:top-10 hover:opacity-40 transition-opacity">solynx.</button>
       )}
+      {label && <a href="/" className="caption fixed bottom-4 right-6 md:right-14 hover:opacity-40 transition-opacity">{label}</a>}
     </main>
   );
 }
