@@ -36,7 +36,7 @@ const works = [
   { src: w6, title: "thoughts running wild", meta: "acrylic in raw canvas, 20 x 15 cm. 2024", pos: "items-start justify-start", w: "w-[58vw] md:w-[24vw]", mt: "mt-8" },
   { src: w2, title: "from tigers and cats", meta: "acrylic on paper, 2025", pos: "items-end justify-end", w: "w-[70vw] md:w-[32vw]" },
   { src: w3, title: "blah.", meta: "coal and acrylic on paper, 2025", pos: "items-center justify-center md:pr-[32vw]", w: "w-[58vw] md:w-[24vw]" },
-  { src: w4, title: "2025", meta: "", pos: "items-center justify-center md:pl-[32vw]", w: "w-[58vw] md:w-[24vw]" },
+  { src: w4, title: "2025", meta: "", pos: "items-center justify-center md:pl-[32vw]", w: "w-[58vw] md:w-[24vw]", cmt: "mt-8" },
   { src: w5, title: "precious.", meta: "acrylic on canvas, 50 x 70 cm. 2025", pos: "items-end justify-center", w: "w-[80vw] md:w-[38vw]" },
 ];
 
@@ -78,7 +78,7 @@ function Index() {
       <div key={w.title} className={`flex h-full p-6 md:p-14 ${w.pos}`}>
         <figure className={"mt" in w ? w.mt : ""}>
           <img src={w.src} alt={w.title} className={w.w} loading="lazy" />
-          <figcaption className="mt-4 flex justify-between gap-8">
+          <figcaption className={`${"cmt" in w ? w.cmt : "mt-4"} flex justify-between gap-8`}>
             <span className="caption">{w.title}{w.meta ? ` — ${w.meta}` : ""}</span>
             <span className="caption tabular-nums">{String(i + 1).padStart(2, "0")} | {String(works.length).padStart(2, "0")}</span>
           </figcaption>
